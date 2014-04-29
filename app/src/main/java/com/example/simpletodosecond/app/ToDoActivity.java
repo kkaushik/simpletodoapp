@@ -1,6 +1,7 @@
 package com.example.simpletodosecond.app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,7 +19,7 @@ public class ToDoActivity extends Activity {
     ArrayList<String> items;
     ArrayAdapter<String> itemsAdapter;
     ListView lvItems;
-
+    private final int REQUEST_CODE = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class ToDoActivity extends Activity {
 
         //Setup listener for removing an item
         setupListViewListenter();
+        setupEditItemListener();
 
     }
 
@@ -87,5 +90,31 @@ public class ToDoActivity extends Activity {
 
 
     }
+
+    public void setupEditItemListener() {
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
+                // Launch the edit text view and pass the text
+                Intent i = new Intent(ToDoActivity.this, EditItemActivity.class);
+                i.putExtra("position", position);
+                i.putExtra("text", itemsAdapter.getItem(position));
+                startActivityForResult(i, REQUEST_CODE);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            String name = data.getExtras().getString("name");
+            int position = data.getExtras().getInt("position");
+            items.set(position, name);
+            itemsAdapter.notifyDataSetChanged();
+
+        }
+    }
+
 
 }
