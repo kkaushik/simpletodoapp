@@ -15,21 +15,41 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <EditText
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true">
+
+      <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/edtitem"
         android:hint="ENTER NEW ITEM"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true" />
 
-    <Button
+      <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="@string/btn_text"
         android:id="@+id/btnadd"
-        android:layout_alignTop="@+id/edtitem"
-        android:layout_alignParentEnd="true"
-        android:onClick="addTodoItem"/>
+        android:onClick="addTodoItem"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/edtitem" />
+
+      <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/dbxLink"
+        android:id="@+id/button"
+        android:onClick="linkToDbx"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/btnadd" />
+
+    </RelativeLayout>
 
 </RelativeLayout>
